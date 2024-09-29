@@ -1,26 +1,46 @@
-<!-- saved.html -->
+<!-- view_saved.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Saved Images</title>
+    <title>Saved Cards</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
 <body>
-    <h1>Saved Images</h1>
-
-    <div class="saved-images">
-        {% for image in saved_images %}
-            <div class="image-item">
-                <p>Image ID: {{ image.id }}</p>
-                <p>Prompt: {{ image.prompt }}</p>
-                <img src="{{ url_for('serve_image', id=image.id) }}" alt="Saved Image" style="max-width: 100%;">
-            </div>
-        {% else %}
-            <p>No images saved yet.</p>
-        {% endfor %}
-    </div>
-
-    <!-- Link to go back to the index -->
+    <h1>Saved Cards</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Side 1 Image ID</th>
+                <th>Side 2 Image ID</th>
+                <th>Side 1 Image</th>
+                <th>Side 2 Image</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for card in saved_cards %}
+            <tr>
+                <td>{{ card['side1'] }}</td>
+                <td>{{ card['side2'] }}</td>
+                <td><img src="{{ url_for('serve_image', id=card['side1']) }}" alt="Side 1" style="max-width: 100px;"></td>
+                <td><img src="{{ url_for('serve_image', id=card['side2']) }}" alt="Side 2" style="max-width: 100px;"></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
     <a href="{{ url_for('index') }}">Back to Home</a>
 </body>
 </html>

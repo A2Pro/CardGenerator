@@ -22,13 +22,20 @@
 <body>
     <h1>Browse Public Cards</h1>
     <div>
-        {% for card in cards %}
-            <div class="card">
-                <h3>Card ID: {{ card['image_id'] }}</h3>
-                <img src="{{ url_for('serve_image', image_id=card['image_id']) }}" alt="Card Image">
-                <form action="{{ url_for('save_card', image_id=card['image_id']) }}" method="POST">
-                    <input type="submit" value="Save Card">
-                </form>
+        {% for set in sets %}
+            <h2>Set ID: {{ set['set_id'] }}</h2>
+            <h3>Side 1:</h3>
+            <img src="{{ url_for('serve_image', id=set['side1_id']) }}" alt="Side 1 Image">
+            <div>
+                {% for side2_image_id in set['side2_ids'] %}
+                    <div class="card"> 
+                        <h3>Side 2 Image ID: {{ side2_image_id }}</h3>
+                        <img src="{{ url_for('serve_image', id=side2_image_id) }}" alt="Card Image">
+                        <form action="{{ url_for('save_card', set_id=set['set_id'], side2_image_id=side2_image_id) }}" method="POST">
+                            <input type="submit" value="Save Card">
+                        </form>
+                    </div>
+                {% endfor %}
             </div>
         {% endfor %}
     </div>

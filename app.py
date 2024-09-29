@@ -247,18 +247,54 @@ def view_set(set_id):
 
     return render_template("viewset.html", side1_image=side1_image, side2_images=side2_images)
 
+@app.route("/save_card/<set_id>/<side2_image_id>", methods=["POST"])
+def save_card(set_id, side2_image_id):
+    username = session.get("username")  # Get the logged-in username
+    if username:
+        # Retrieve the set to get side1
+        set_info = sets.find_one({"set_id": int(set_id)})
+        if set_info:
+            side1 = set_info['side1_id']
+            # Save both sides to the Saved collection
+            saved.insert_one({
+                "username": username,
+                "side1": side1,
+                "side2_image_id": side2_image_id
+            })
+            flash("Card saved successfully!")
+        else:
+            print("Set not found.")
+    else:
+        flash("You need to be logged in to save cards.")
+    return redirect(url_for("browse_cards"))
 
-@app.route("/saved")
-@login_required
+
+@app.route("/view_saved")
 def view_saved():
     username = session.get("username")
     saved_images = saved.find({"username": username})
+
+    # Debug: Print out the username and number of saved images
+    print(f"Username: {username}")
+
     saved_images_data = []
+
     for saved_image in saved_images:
-        image_data = images.find_one({"id": saved_image["image_id"]})
-        if image_data:
-            saved_images_data.append(image_data)
-    return render_template("saved.html", saved_images=saved_images_data)
+        print(f"Saved image data: {saved_image}")  # Debug statement
+        
+        side1_image_id = saved_image["side1"]
+        side2_image_id = saved_image["side2_image_id"]
+        
+       
+        if side1_image_id and side2_image_id:
+            saved_images_data.append({
+                "side1": side1_image_id,
+                "side2": side2_image_id
+            })
+
+
+    return render_template("saved.html", saved_cards=saved_images_data)
+
 
 @app.route("/serve_image/<int:id>")
 def serve_image(id):
@@ -273,11 +309,11 @@ def serve_image(id):
 
 @app.route("/browse_cards")
 def browse_cards():
-    # Get 10 random public cards from the database
-    public_cards = list(public.find())
-    random_cards = random.sample(public_cards, min(len(public_cards), 10))  # Get up to 10 random cards
+    # Get the latest sets from the database
+    latest_sets = list(sets.find().sort("_id", -1).limit(10))  # Get the latest 10 sets
 
-    return render_template("browse_cards.html", cards=random_cards)
+    return render_template("browse_cards.html", sets=latest_sets)
+
 
 
 if __name__ == "__main__":
