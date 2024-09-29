@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Card Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        p {
+            font-size: 1.2em;
+            color: #555;
+        }
+        .button-container {
+            display: flex;
+            gap: 20px;
+        }
+        .button {
+            background-color: #007BFF;
+            color: white;
+            padding: 15px 30px; 
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Welcome to AI Card Generator</h1>
+    <p>Create unique business card sets or explore designs from others!</p>
+</header>
+
+<div class="button-container">
+    <a href="/create_set" class="button">Create a New Set</a>
+    <a href="/browse_cards" class="button">Browse New Cards</a>
+    <a href="/saved" class="button">View Saved Cards</a>
+</div>
+
+<div class="footer">
+    <p>&copy; 2024 AI Card Generator. All rights reserved.</p>
+</div>
+
+</body>
+</html>

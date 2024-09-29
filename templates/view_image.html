@@ -1,0 +1,23 @@
+<!-- view_image.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Image</title>
+</head>
+<body>
+    <h1>Image ID: {{ image_id }}</h1>
+    <p>Prompt: {{ prompt }}</p>
+
+    <!-- Use the serve_image route to display the image -->
+    <img src="{{ url_for('serve_image', id=image_id) }}" alt="Generated Image" style="max-width: 100%;">
+
+    <!-- Save button -->
+    <form method="POST">
+        <button type="submit">Save</button>
+    </form>
+
+    <!-- Link to go back to the index -->
+    <a href="{{ url_for('index') }}">Back to Home</a>
+</body>
+</html>

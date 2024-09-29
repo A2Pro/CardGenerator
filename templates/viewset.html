@@ -1,0 +1,26 @@
+<!-- viewset.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Set</title>
+</head>
+<body>
+    <h1>Cards</h1>
+    <table>
+        <tr>
+            <th>Side 1</th>
+            <th>Side 2</th>
+        </tr>
+        {% for side2_image in side2_images %}
+        <tr>
+            <td><img src="{{ url_for('serve_image', id=side1_image.id) }}" alt="Side 1 Image"></td>
+            <td><img src="{{ url_for('serve_image', id=side2_image.id) }}" alt="Side 2 Image"></td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+    <a href="{{ url_for('index') }}">Back to Home</a>
+</body>
+</html>

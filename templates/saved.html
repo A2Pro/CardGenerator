@@ -1,0 +1,26 @@
+<!-- saved.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Saved Images</title>
+</head>
+<body>
+    <h1>Saved Images</h1>
+
+    <div class="saved-images">
+        {% for image in saved_images %}
+            <div class="image-item">
+                <p>Image ID: {{ image.id }}</p>
+                <p>Prompt: {{ image.prompt }}</p>
+                <img src="{{ url_for('serve_image', id=image.id) }}" alt="Saved Image" style="max-width: 100%;">
+            </div>
+        {% else %}
+            <p>No images saved yet.</p>
+        {% endfor %}
+    </div>
+
+    <!-- Link to go back to the index -->
+    <a href="{{ url_for('index') }}">Back to Home</a>
+</body>
+</html>
